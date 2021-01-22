@@ -16,10 +16,10 @@ end
 helpers do
   def list_users(exclude = [])
     result = ''
-    @user_data.keys.each do |username|
-      next if exclude.include?(username.to_s)
+    @user_data.keys.sort.each do |username|
+      next if exclude.include?(username)
       user_url = "/users/#{username}"
-      result += "<li><a href=\"#{user_url}\">#{username.capitalize}</a></li>\n"
+      result += "<li><a href=\"#{user_url}\">#{username.capitalize}</a></li>"
     end
     result
   end
@@ -29,9 +29,7 @@ helpers do
   end
 
   def list_stats
-    interest_count = 0
-    user_count = @user_data.size
-    "<p>There are #{user_count} users with #{count_interests} interests.</p>"
+    "<p>There are #{@user_data.size} users with #{count_interests} interests.</p>"
   end
 end
 
@@ -45,13 +43,10 @@ get "/" do
 end
 
 get "/users/:username" do
-  username = params[:username]
-  unless @user_data.keys.include?(username.to_sym)
-    redirect '/'
-  end
-  @title = username
-  @name = username
-  @email = @user_data[username.to_sym][:email]
-  @interests = @user_data[username.to_sym][:interests]
+  @name = params[:username].to_sym
+  redirect "/" unless @user_data.keys.include?(@name)
+  @title = @name
+  @email = @user_data[@name][:email]
+  @interests = @user_data[@name][:interests]
   erb :user_page
 end
