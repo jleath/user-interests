@@ -1,0 +1,11 @@
+<h3><%= @name.capitalize %></h3>
+<p><em><%= @email %></em></p>
+<h4>Interests:</h4>
+<%= list_interests(@interests) %>
+
+<h3>Other Users</h3>
+<ul>
+  <%= list_users([@name]) %>
+ </ul>
+
+ <a href="/">Return to user list</a>

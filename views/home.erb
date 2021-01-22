@@ -1,0 +1,9 @@
+<% if @user_data.nil? || @user_data.empty? %>
+  <p>Sorry, no users are available.</p>
+<% else %>
+  <h2>Users</h2>
+  <ul>
+    <%= list_users %>
+  </ul>
+<% end %>
+<a href="/">Return to user list</a>
